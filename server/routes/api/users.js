@@ -86,9 +86,9 @@ router
         );
 
         if (!user) return res.status(400).json({ message: "user not found" });
-        res.status(300).json(getUserProps(user));
+        res.status(200).json(getUserProps(user));
       } catch (error) {
-        res.status(400).jason({ message: "problem updating", error });
+        res.status(400).json({ message: "problem updating", error });
       }
     }
   );
@@ -96,6 +96,38 @@ router
 router.route("/isauth").get(checkLoggedIn, async (req, res) => {
   res.status(200).send(getUserProps(req.user));
 });
+
+router
+  .route("/update_email")
+  .patch(
+    checkLoggedIn,
+    grantAccess("updateOwn", "profile"),
+    async (req, res) => {
+      try {
+        //verify unique email
+        if (await User.emailTaken(req.body.newemail)) {
+          return res.status(400).json({ message: "Email already in use" });
+        }
+
+        const user = await User.findOneAndUpdate(
+          { _id: req.user._id, email: req.body.email },
+          {
+            $SET: { email: req.body.newemail },
+          },
+          { new: true }
+        );
+        if (!user) return res.status(400).json({ message: "User not found" });
+
+        const token = user.generateToken();
+        res
+          .cookie("x-access-token", token)
+          .status(200)
+          .send({ email: user.email });
+      } catch (error) {
+        res.status(400).json({ message: "unauthorized", error });
+      }
+    }
+  );
 
 const getUserProps = (user) => {
   return {
