@@ -1,6 +1,6 @@
 const { roles } = require("../config/roles");
 
-exports.grantAccess = function (action, response) {
+exports.grantAccess = function (action, resource) {
   return async (req, res, next) => {
     try {
       const permission = roles.can(req.user.role)[action](resource);
