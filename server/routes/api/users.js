@@ -78,7 +78,7 @@ router
           {
             $set: {
               firstname: req.body.firstname,
-              lastname: rxp.body.lastname,
+              lastname: req.body.lastname,
               age: req.body.age,
             },
           },
