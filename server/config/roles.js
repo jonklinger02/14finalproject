@@ -8,6 +8,12 @@ let grantsObject = {
       "update:any": ["*"],
       "delete:any": ["*"],
     },
+    article: {
+      "create:any": ["*"],
+      "read:any": ["*"],
+      "update:any": ["*"],
+      "delete:any": ["*"],
+    },
   },
   user: {
     profile: {
