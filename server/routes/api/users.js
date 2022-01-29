@@ -112,13 +112,15 @@ router
         const user = await User.findOneAndUpdate(
           { _id: req.user._id, email: req.body.email },
           {
-            $SET: { email: req.body.newemail },
+            $set: { email: req.body.newemail },
           },
           { new: true }
         );
+
         if (!user) return res.status(400).json({ message: "User not found" });
 
         const token = user.generateToken();
+
         res
           .cookie("x-access-token", token)
           .status(200)
