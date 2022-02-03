@@ -29,24 +29,24 @@ const articleSchema = mongoose.Schema({
   },
   actors: {
     type: [String],
-    required: true,
+    required: [true, "Who's in it?"],
     validate: {
       validator: function (array) {
         return array.length >= 2;
       },
       message: "you must add at least 2 actors",
     },
-    status: {
-      type: String,
-      required: true,
-      enum: ["draft", "public"],
-      default: "draft",
-      index: true,
-    },
-    date: {
-      type: Date,
-      default: Date.now(),
-    },
+  },
+  status: {
+    type: String,
+    required: true,
+    enum: ["draft", "public"],
+    default: "draft",
+    index: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now(),
   },
 });
 
