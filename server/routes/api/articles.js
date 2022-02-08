@@ -82,7 +82,27 @@ router
       }
     }
   );
-//get articles no auth
+
+//fetch articles with pagination
+router
+  .route("/admin/paginate")
+  .post(checkLoggedIn, grantAccess("readAny", "articles"), async (req, res) => {
+    try {
+      const limit = req.body.limit ? req.body.limt : 5;
+      const aggQuery = Article.aggregate();
+      const options = {
+        page: req.body.page,
+        limit,
+        sort: { _id: "desc" },
+      };
+      const articles = await Article.aggregatePaginate(aggQuery, options);
+      res.status(200).json(articles);
+    } catch (error) {
+      res.status(400).json({ message: "Error fetching articles." });
+    }
+  });
+
+///// NO AUTH REQUIRED /////
 
 router.route("/getby_id/:id").get(async (req, res) => {
   try {
@@ -114,14 +134,14 @@ router.route("/loadmore").post(async (req, res) => {
       .skip(sortArgs.skip)
       .limit(sortArgs.limit);
 
-    console.log(articles);
+    if (!articles || articles.length === 0) {
+      res.status(400).json({ message: "Post an article first!" });
+    }
+
     res.status(200).json(articles);
   } catch (error) {
-    console.log(error);
     res.status(400).json({ message: "Error fetching articles", error });
   }
 });
-
-//fetch articles with pagination
 
 module.exports = router;
