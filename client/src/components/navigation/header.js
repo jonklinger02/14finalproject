@@ -3,7 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 import SideDrawer from "./sideNavigation";
 
 const Header = (props) => {
-  console.log(props);
+  console.log(React.version);
   return (
     <>
       <nav className='navbar fixed-top'>
@@ -13,6 +13,7 @@ const Header = (props) => {
           className=' navbar-brand d-flex align-items-center'>
           FlickBase
         </Link>
+        //
         <SideDrawer />
       </nav>
     </>

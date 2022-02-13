@@ -8,19 +8,15 @@ import {
   TextField,
 } from "@material-ui/core";
 
-import DehazeIcon from "@material-ui/icons/Dehaze";
+//import DehazeIcon from "@mui/icons-material/Dehaze";
+
 import MailIcon from "@material-ui/icons/Mail";
 import HomeIcon from "@material-ui/icons/Home";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 
 const SideDrawer = () => {
-  return (
-    <>
-      <DehazeIcon className='drawer_btn' />
-      sidedrawer
-    </>
-  );
+  return <>sideDrawer</>;
 };
 
 export default SideDrawer;
