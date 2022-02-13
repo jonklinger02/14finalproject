@@ -13,7 +13,6 @@ const Header = (props) => {
           className=' navbar-brand d-flex align-items-center'>
           FlickBase
         </Link>
-        //
         <SideDrawer />
       </nav>
     </>
